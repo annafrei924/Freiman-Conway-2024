@@ -39,7 +39,7 @@ public class Grid {
                         }
                     }
                 }
-                if(neighbors == 3 || (field[y][x] == 1 && neighbors == 2)) {
+                if (neighbors == 3 || (field[y][x] == 1 && neighbors == 2)) {
                     next[y][x] = 1;
                 }
             }
