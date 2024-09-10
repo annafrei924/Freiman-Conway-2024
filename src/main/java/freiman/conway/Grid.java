@@ -4,9 +4,11 @@ import java.util.Random;
 
 public class Grid {
     private int[][] field;
+
     public Grid(int width, int height) {
         field = new int[height][width];
     }
+
     public int getWidth() {
         return field[0].length;
     }
@@ -60,14 +62,12 @@ public class Grid {
 
     public String toString() {
         StringBuilder builder = new StringBuilder();
-
         for (int y = 0; y < field.length; y++) {
             for (int x = 0; x < field[y].length; x++) {
                 builder.append(field[y][x]);
             }
             builder.append("\n");
         }
-
         return builder.toString();
     }
 }
