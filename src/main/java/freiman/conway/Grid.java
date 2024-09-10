@@ -38,13 +38,11 @@ public class Grid {
                 }
 
                 //cell dies from loneliness or overpopulation
-                if (field[y][x] == 1 && (neighbors < 2 || neighbors >= 4)) {
+                if (field[y][x] == 1 && (neighbors < 2 || neighbors >= 4)){
                     next[y][x] = 0;
-                }
-                else if (field[y][x] == 0 && neighbors == 3) {
+                } else if (field[y][x] == 0 && neighbors == 3){
                     next[y][x] = 1;
-                }
-                else {
+                } else {
                     next[y][x] = field[y][x];
                 }
             }
