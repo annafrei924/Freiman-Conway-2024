@@ -22,15 +22,15 @@ public class GridTest {
     public void nextGen() {
         //given
         Grid grid = new Grid(3, 3);
-        grid.put(0, 0);
-        grid.put(1, 0);
-        grid.put(2, 0);
+        grid.put(0, 1);
+        grid.put(1, 1);
+        grid.put(2, 1);
 
         //when
         grid.nextGen();
 
         //then
-        assertEquals("010\n010\n000\n", grid.toString());
+        assertEquals("010\n010\n010\n", grid.toString());
 
     }
 }

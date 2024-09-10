@@ -42,9 +42,8 @@ public class Grid {
 
                 //cell dies from loneliness or overpopulation
                 if (field[y][x] == 1 && !(neighbors < 2 || neighbors >= 4)) {
-                    //next[y][x] = 0;
                     next[y][x] = field[y][x];
-                } else if (field[y][x] == 0 && neighbors == 3) {
+                } else if (neighbors == 3) {
                     next[y][x] = 1;
                 }
             }
