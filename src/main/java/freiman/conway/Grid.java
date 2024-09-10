@@ -3,6 +3,7 @@ package freiman.conway;
 import java.util.Random;
 
 public class Grid {
+
     private int[][] field;
 
     public Grid(int width, int height) {
@@ -31,8 +32,8 @@ public class Grid {
                         if (i == 0 && j == 0) {
                             continue;
                         }
-                        if((y + i >= 0 && y + i < getHeight()) && (x + j >= 0 && x + j < getWidth())) {
-                            if (field[y+i][x+j] == 1) {
+                        if ((y + i >= 0 && y + i < getHeight()) && (x + j >= 0 && x + j < getWidth())) {
+                            if (field[y + i][x + j] == 1) {
                                 neighbors++;
                             }
                         }
