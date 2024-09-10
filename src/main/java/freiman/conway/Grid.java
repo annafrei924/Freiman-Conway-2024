@@ -39,18 +39,9 @@ public class Grid {
                         }
                     }
                 }
-
-                //decides if cell should die or stay alive
-                if (field[y][x] == 1) {
-                    if (neighbors < 2 || neighbors > 3) {
-                        next[y][x] = 0;
-                    } else {
-                        next[y][x] = 1;
-                    }
-                } else if (neighbors == 3) {
+                if(neighbors == 3 || (field[y][x] == 1 && neighbors == 2)) {
                     next[y][x] = 1;
                 }
-
             }
         }
 
