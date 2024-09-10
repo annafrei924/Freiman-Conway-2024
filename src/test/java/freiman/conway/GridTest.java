@@ -24,14 +24,13 @@ public class GridTest {
         Grid grid = new Grid(3, 3);
         grid.put(0, 0);
         grid.put(1, 0);
-        grid.put(2, 1);
-        grid.put(2, 2);
+        grid.put(2, 0);
 
         //when
         grid.nextGen();
 
         //then
-        assertEquals("010\n001\n000\n", grid.toString());
+        assertEquals("010\n010\n000\n", grid.toString());
 
     }
 }
