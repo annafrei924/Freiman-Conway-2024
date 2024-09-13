@@ -13,7 +13,7 @@ public class GridFrame extends JFrame {
 
 
     public GridFrame() {
-        setSize(grid.getWidth()*gridSpacing, grid.getHeight()*gridSpacing);
+        setSize(grid.getWidth() * gridSpacing, grid.getHeight() * gridSpacing);
         setTitle("Game of Life");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 

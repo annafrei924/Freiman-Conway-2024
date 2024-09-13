@@ -56,7 +56,7 @@ public class GridComponent extends JComponent {
                 }
                 else {
                     g.setColor(Color.LIGHT_GRAY);
-                    g.drawRect(x*gridSpacing, y*gridSpacing,gridSpacing, gridSpacing);
+                    g.drawRect(x * gridSpacing, y * gridSpacing,gridSpacing, gridSpacing);
                 }
             }
         }

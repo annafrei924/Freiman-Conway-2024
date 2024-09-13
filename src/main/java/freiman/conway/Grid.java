@@ -18,7 +18,9 @@ public class Grid {
         return field.length;
     }
 
-    public boolean isAlive(int x, int y) { return field[y][x]==1; }
+    public boolean isAlive(int x, int y) {
+        return field[y][x] == 1;
+    }
 
     /**
      * Creates next generation of cells
