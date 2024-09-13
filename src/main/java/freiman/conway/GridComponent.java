@@ -15,8 +15,7 @@ public class GridComponent extends JComponent {
         addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                grid.put(e.getX()/gridSpacing, e.getY()/gridSpacing);
-                System.out.println("Mouse clicked at: (" + e.getX()/gridSpacing + ", " + e.getY()/gridSpacing + ")");
+                grid.put(e.getX() / gridSpacing, e.getY() / gridSpacing);
                 repaint();
 
             }
@@ -54,7 +53,8 @@ public class GridComponent extends JComponent {
                     g.setColor(Color.GREEN);
                     g.fillRect(x * gridSpacing, y * gridSpacing, gridSpacing, gridSpacing);
                 }
-                else {
+                else
+                {
                     g.setColor(Color.LIGHT_GRAY);
                     g.drawRect(x * gridSpacing, y * gridSpacing,gridSpacing, gridSpacing);
                 }

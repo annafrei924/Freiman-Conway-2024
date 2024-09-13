@@ -20,10 +20,7 @@ public class GridFrame extends JFrame {
         GridComponent gridComponent = new GridComponent(grid);
         add(gridComponent, BorderLayout.CENTER);
 
-        JPanel buttonPanel = new JPanel();
         JButton playButton = new JButton("Play");
-        JButton pauseButton = new JButton("Pause");
-        JButton clearButton = new JButton("Clear");
         playButton.addActionListener(e -> {
             timer = new Timer(1000, new ActionListener() {
                 @Override
@@ -35,17 +32,19 @@ public class GridFrame extends JFrame {
             timer.start();
         });
 
+        JButton pauseButton = new JButton("Pause");
         pauseButton.addActionListener(e -> {
             if (timer != null && timer.isRunning()) {
                 timer.stop();
             }
         });
 
+        JButton clearButton = new JButton("Clear");
         clearButton.addActionListener(e -> {
             grid.clear();
             repaint();
         });
-
+        JPanel buttonPanel = new JPanel();
         buttonPanel.add(playButton);
         buttonPanel.add(pauseButton);
         buttonPanel.add(clearButton);
