@@ -61,6 +61,13 @@ public class Grid {
     }
 
     /**
+     * Sets the value in the field to be 0
+     */
+    public void remove(int x, int y) {
+        field[y][x] = 0;
+    }
+
+    /**
      * Clears the field
      */
 

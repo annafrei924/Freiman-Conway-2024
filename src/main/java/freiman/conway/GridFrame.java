@@ -41,6 +41,9 @@ public class GridFrame extends JFrame {
 
         JButton clearButton = new JButton("Clear");
         clearButton.addActionListener(e -> {
+            if (timer != null && timer.isRunning()) {
+                timer.stop();
+            }
             grid.clear();
             repaint();
         });
