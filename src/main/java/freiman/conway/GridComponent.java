@@ -52,8 +52,7 @@ public class GridComponent extends JComponent {
                 if (grid.isAlive(x, y)) {
                     g.setColor(Color.GREEN);
                     g.fillRect(x * gridSpacing, y * gridSpacing, gridSpacing, gridSpacing);
-                }
-                else {
+                } else {
                     g.setColor(Color.LIGHT_GRAY);
                     g.drawRect(x * gridSpacing, y * gridSpacing,gridSpacing, gridSpacing);
                 }
