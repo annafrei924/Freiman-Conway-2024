@@ -6,7 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class GridFrame extends JFrame {
-    int gridSpacing = 15;
+    private static final int gridSpacing = 15;
 
     private final Grid grid = new Grid(50, 50);
     private Timer timer;  // Class-level Timer field
@@ -47,6 +47,7 @@ public class GridFrame extends JFrame {
             grid.clear();
             repaint();
         });
+
         JPanel buttonPanel = new JPanel();
         buttonPanel.add(playButton);
         buttonPanel.add(pauseButton);

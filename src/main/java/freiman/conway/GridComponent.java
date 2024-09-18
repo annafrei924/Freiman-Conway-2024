@@ -15,10 +15,12 @@ public class GridComponent extends JComponent {
         addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                if (!grid.isAlive(e.getX() / gridSpacing, e.getY() / gridSpacing)) {
-                    grid.put(e.getX() / gridSpacing, e.getY() / gridSpacing);
+                int posX = e.getX() / gridSpacing;
+                int posY = e.getY() / gridSpacing;
+                if (!grid.isAlive(posX, posY)) {
+                    grid.put(posX, posY);
                 } else {
-                    grid.remove(e.getX() / gridSpacing, e.getY() / gridSpacing);
+                    grid.remove(posX, posY);
                 }
 
                 repaint();
