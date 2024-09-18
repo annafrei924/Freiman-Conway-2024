@@ -18,6 +18,10 @@ public class Grid {
         return field.length;
     }
 
+    public boolean isAlive(int x, int y) {
+        return field[y][x] == 1;
+    }
+
     /**
      * Creates next generation of cells
      */
@@ -51,8 +55,24 @@ public class Grid {
     /**
      * Sets the value in field to be 1
      */
-    public void put(int x, int y) {
+    public void put(int x, int y)
+    {
         field[y][x] = 1;
+    }
+
+    /**
+     * Sets the value in the field to be 0
+     */
+    public void remove(int x, int y) {
+        field[y][x] = 0;
+    }
+
+    /**
+     * Clears the field
+     */
+
+    public void clear() {
+        field = new int [getHeight()][getWidth()];
     }
 
     public String toString() {
