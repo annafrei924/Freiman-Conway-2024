@@ -47,4 +47,22 @@ public class GridTest {
         //then
         assertEquals("000\n000\n000\n", grid.toString());
     }
+
+    @Test
+    public void rleReader() {
+        //given
+        Grid grid = new Grid(3, 3);
+        grid.put(1,0);
+        grid.put(2, 1);
+        grid.put(0, 2);
+        grid.put(1, 2);
+        grid.put(2, 2);
+
+        //when
+        Grid rleGrid = new Grid(3, 3);
+        rleGrid.readRLE("https://conwaylife.com/patterns/glider.rle");
+
+        //then
+        assertEquals(grid.toString(), rleGrid.toString());
+    }
 }

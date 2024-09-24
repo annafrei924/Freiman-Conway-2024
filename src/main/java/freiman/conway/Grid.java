@@ -1,5 +1,10 @@
 package freiman.conway;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.URL;
 import java.util.Random;
 
 public class Grid {
@@ -70,9 +75,71 @@ public class Grid {
     /**
      * Clears the field
      */
-
     public void clear() {
         field = new int [getHeight()][getWidth()];
+    }
+
+    /**
+     * @param filePath
+     * reads from an RLE file
+     */
+    public void readRLE(String filePath) {
+        StringBuilder rle = new StringBuilder();
+        String line;
+
+        try {
+            URL url = new URL(filePath);
+            BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream()));
+            while ((line = reader.readLine()) != null) {
+                if (!line.startsWith("#") && !line.startsWith("x")) {
+                    rle.append(line);
+                }
+            }
+            reader.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        rleToGrid(rle.toString());
+    }
+
+    public void rleToGrid(String rle) {
+        int row = 0;
+        int col = 0;
+        int count = 0;
+
+        for (int i = 0; i < rle.length(); i++) {
+            char c = rle.charAt(i);
+            if (Character.isDigit(c)) {
+                count = Integer.parseInt(String.valueOf(c));;
+            } else {
+                if (count == 0) {
+                    count = 1;
+                }
+                switch (c) {
+                    case 'b':
+                        col += count;
+                        break;
+                    case 'o':
+                        for (int j = 0; j < count; j++) {
+                            if (row < getHeight() && col < getWidth()) {
+                                field[row][col] = 1;
+                                col++;
+                            }
+                        }
+                        break;
+                    case '$':
+                        row += count;
+                        col = 0;
+                        break;
+                    case '!':
+                        return;
+                    default:
+                        System.out.println("Invalid character: " + c);
+                        break;
+                }
+                count = 0;
+            }
+        }
     }
 
     public String toString() {

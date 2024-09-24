@@ -4,6 +4,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class GridFrame extends JFrame {
     private static final int gridSpacing = 15;
@@ -52,8 +54,24 @@ public class GridFrame extends JFrame {
         buttonPanel.add(playButton);
         buttonPanel.add(pauseButton);
         buttonPanel.add(clearButton);
-
         add(buttonPanel, BorderLayout.SOUTH);
+
+
+        JTextField rleField = new JTextField();
+        add(rleField, BorderLayout.NORTH);
+        rleField.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    String rleInput = rleField.getText();
+                    grid.clear();
+                    grid.readRLE(rleInput);
+                    repaint();
+                }
+            }
+        });
+
+
     }
 
 }
