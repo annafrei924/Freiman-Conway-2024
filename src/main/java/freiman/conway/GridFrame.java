@@ -65,7 +65,7 @@ public class GridFrame extends JFrame {
                 if (e.getKeyCode() == KeyEvent.VK_ENTER) {
                     String rleInput = rleField.getText();
                     grid.clear();
-                    grid.readRLE(rleInput);
+                    grid.readRle(rleInput);
                     repaint();
                 }
             }

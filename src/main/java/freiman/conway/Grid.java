@@ -83,7 +83,7 @@ public class Grid {
      * @param filePath
      * reads from an RLE file
      */
-    public void readRLE(String filePath) {
+    public void readRle(String filePath) {
         StringBuilder rle = new StringBuilder();
         String line;
 
