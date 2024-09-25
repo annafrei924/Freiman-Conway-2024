@@ -78,11 +78,12 @@ public class Grid {
         field = new int [getHeight()][getWidth()];
     }
     /**
-     * @param width
-     * @param height
+     * @param width - the width of the new field
+     * @param height - the height of the new field
      * resizes and clears the grid
      */
-    public void clear(int width, int height){
+
+    public void clear(int width, int height) {
         field = new int[height][width];
     }
 
