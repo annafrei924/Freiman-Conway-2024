@@ -11,8 +11,7 @@ public class GridFrame extends JFrame {
     private static final int gridSpacing = 15;
 
     private final Grid grid = new Grid(50, 50);
-    private Timer timer;  // Class-level Timer field
-
+    private Timer timer;
 
     public GridFrame() {
         setSize(grid.getWidth() * gridSpacing, grid.getHeight() * gridSpacing);
@@ -64,7 +63,6 @@ public class GridFrame extends JFrame {
             public void keyPressed(KeyEvent e) {
                 if (e.getKeyCode() == KeyEvent.VK_ENTER) {
                     String rleInput = rleField.getText();
-                    grid.clear();
                     grid.readRle(rleInput);
                     repaint();
                 }

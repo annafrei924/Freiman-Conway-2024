@@ -1,11 +1,10 @@
 package freiman.conway;
 
 import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
-import java.util.Random;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Grid {
 
@@ -78,6 +77,14 @@ public class Grid {
     public void clear() {
         field = new int [getHeight()][getWidth()];
     }
+    /**
+     * @param width
+     * @param height
+     * resizes and clears the grid
+     */
+    public void clear(int width, int height){
+        field = new int[height][width];
+    }
 
     /**
      * @param filePath
@@ -86,6 +93,8 @@ public class Grid {
     public void readRle(String filePath) {
         StringBuilder rle = new StringBuilder();
         String line;
+        String regex = "x = (\\d+), y = (\\d+), rule = (.+)";
+        Pattern pattern = Pattern.compile(regex);
 
         try {
             URL url = new URL(filePath);
@@ -93,15 +102,26 @@ public class Grid {
             while ((line = reader.readLine()) != null) {
                 if (!line.startsWith("#") && !line.startsWith("x")) {
                     rle.append(line);
+                } else if (line.startsWith("x")) {
+                    Matcher matcher = pattern.matcher(line);
+                    if (matcher.find()) {
+                        int x = Integer.parseInt(matcher.group(1));
+                        int y = Integer.parseInt(matcher.group(2));
+                        clear(x, y);
+                    }
                 }
             }
             reader.close();
+            rleToGrid(rle.toString());
         } catch (Exception e) {
             e.printStackTrace();
         }
-        rleToGrid(rle.toString());
     }
 
+    /**
+     * @param rle - string with meaningful content in a rle file
+     * Goes through the rle and fills the grid accordingly
+     */
     public void rleToGrid(String rle) {
         int row = 0;
         int col = 0;
@@ -141,6 +161,7 @@ public class Grid {
             }
         }
     }
+
 
     public String toString() {
         StringBuilder builder = new StringBuilder();
