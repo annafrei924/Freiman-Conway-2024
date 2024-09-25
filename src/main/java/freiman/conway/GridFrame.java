@@ -4,13 +4,14 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class GridFrame extends JFrame {
     private static final int gridSpacing = 15;
 
     private final Grid grid = new Grid(50, 50);
-    private Timer timer;  // Class-level Timer field
-
+    private Timer timer;
 
     public GridFrame() {
         setSize(grid.getWidth() * gridSpacing, grid.getHeight() * gridSpacing);
@@ -52,8 +53,23 @@ public class GridFrame extends JFrame {
         buttonPanel.add(playButton);
         buttonPanel.add(pauseButton);
         buttonPanel.add(clearButton);
-
         add(buttonPanel, BorderLayout.SOUTH);
+
+
+        JTextField rleField = new JTextField();
+        add(rleField, BorderLayout.NORTH);
+        rleField.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    String rleInput = rleField.getText();
+                    grid.readRle(rleInput);
+                    repaint();
+                }
+            }
+        });
+
+
     }
 
 }
