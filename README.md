@@ -1,6 +1,11 @@
 # Conway's Game of Life Project
 
-This project uses an interactive GUI to mimic Conway's Game of Life. It also feaures an RLE translator, so if the user submits an RLE and hits enter, the field clears and the RLE is loaded into the field.
+This project uses an interactive GUI to mimic Conway's Game of Life. It also feaures an RLE translator, so if the user enters or pastes in  
+1. The text of an RLE file 
+2. The URL of a file online that contains the RLE
+3. The location of the file on one's computer
+
+the RLE is loaded into the field. 
 
 
 ![GameOfLife](Screenshots/GameOfLife.png)

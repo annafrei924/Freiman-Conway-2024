@@ -1,6 +1,9 @@
 package freiman.conway;
 
 import org.junit.jupiter.api.Test;
+
+import java.io.IOException;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
@@ -49,22 +52,7 @@ public class GridTest {
     }
 
     @Test
-    public void clearWithResize() {
-        //given
-        Grid grid = new Grid(3, 3);
-        grid.put(0, 1);
-        grid.put(1, 1);
-        grid.put(2, 1);
-
-        //when
-        grid.clear(2, 2);
-
-        //then
-        assertEquals("00\n00\n", grid.toString());
-    }
-
-    @Test
-    public void rleReader() {
+    public void rleReaderSameSize() throws IOException {
         //given
         Grid grid = new Grid(3, 3);
         grid.put(1, 0);
@@ -75,7 +63,25 @@ public class GridTest {
 
         //when
         Grid rleGrid = new Grid(3, 3);
-        rleGrid.readRle("https://conwaylife.com/patterns/glider.rle");
+        RleReader rleReader = new RleReader(rleGrid, "https://conwaylife.com/patterns/glider.rle");
+
+        //then
+        assertEquals(grid.toString(), rleGrid.toString());
+    }
+
+    @Test
+    public void rleReaderDifferentSize() throws IOException {
+        //given
+        Grid grid = new Grid(10, 10);
+        grid.put(5, 4);
+        grid.put(6, 5);
+        grid.put(4, 6);
+        grid.put(5, 6);
+        grid.put(6, 6);
+
+        //when
+        Grid rleGrid = new Grid(10, 10);
+        RleReader rleReader = new RleReader(rleGrid, "https://conwaylife.com/patterns/glider.rle");
 
         //then
         assertEquals(grid.toString(), rleGrid.toString());
