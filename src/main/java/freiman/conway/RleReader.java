@@ -16,7 +16,7 @@ public class RleReader {
         Pattern pattern = Pattern.compile(regex);
         BufferedReader reader = null;
 
-        if (isValidURL(input)) {
+        if (isValidUrl(input)) {
             URL url = new URL(input);
             reader = new BufferedReader(new InputStreamReader(url.openStream()));
         } else if (isFilePath(input)) {
@@ -48,12 +48,12 @@ public class RleReader {
 
         int initialRow = 0;
         if (grid.getWidth() != rleWidth) {
-            initialRow = grid.getWidth()/2 - rleWidth/2;
+            initialRow = grid.getWidth() / 2 - rleWidth / 2;
         }
 
         int initalCol = 0;
-        if(grid.getHeight() != rleHeight ) {
-            initalCol = grid.getHeight()/2 - rleHeight/2;
+        if (grid.getHeight() != rleHeight) {
+            initalCol = grid.getHeight() / 2 - rleHeight / 2;
         }
 
         int row = initialRow;
@@ -100,7 +100,7 @@ public class RleReader {
         }
     }
 
-    private static boolean isValidURL(String input) {
+    private static boolean isValidUrl(String input) {
         try {
             new URL(input).toURI();
             return true;
