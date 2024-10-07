@@ -71,6 +71,8 @@ public class GridFrame extends JFrame {
             try {
                 Object paste = Toolkit.getDefaultToolkit().getSystemClipboard().getData(DataFlavor.stringFlavor);
                 RleReader reader = new RleReader(grid, paste.toString());
+                reader.readFile();
+                reader.fillGrid();
                 if (paste.toString().endsWith(".rle")) {
                     rleField.setText(paste.toString());
                 }
@@ -83,8 +85,10 @@ public class GridFrame extends JFrame {
             @Override
             public void keyPressed(KeyEvent e) {
                 if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    RleReader rleReader = new RleReader(grid, rleField.getText());
                     try {
-                        RleReader rleReader = new RleReader(grid, rleField.getText());
+                        rleReader.readFile();
+                        rleReader.fillGrid();
                     } catch (IOException ex) {
                         throw new RuntimeException(ex);
                     }

@@ -63,9 +63,11 @@ public class GridTest {
 
         //when
         Grid rleGrid = new Grid(3, 3);
-        RleReader rleReader = new RleReader(rleGrid, "https://conwaylife.com/patterns/glider.rle");
 
-        //then
+        RleReader rleReader = new RleReader(rleGrid, "https://conwaylife.com/patterns/glider.rle");
+        rleReader.readFile();
+        rleReader.fillGrid();
+
         assertEquals(grid.toString(), rleGrid.toString());
     }
 
@@ -78,10 +80,12 @@ public class GridTest {
         grid.put(4, 6);
         grid.put(5, 6);
         grid.put(6, 6);
+        Grid rleGrid = new Grid(10, 10);
 
         //when
-        Grid rleGrid = new Grid(10, 10);
         RleReader rleReader = new RleReader(rleGrid, "https://conwaylife.com/patterns/glider.rle");
+        rleReader.readFile();
+        rleReader.fillGrid();
 
         //then
         assertEquals(grid.toString(), rleGrid.toString());

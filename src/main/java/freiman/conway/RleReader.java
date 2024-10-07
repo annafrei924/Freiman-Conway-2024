@@ -8,9 +8,18 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class RleReader {
+    private Grid grid;
+    private String input;
 
-    public RleReader(Grid grid, String input) throws IOException {
-        Object[] retVal = new Object[3];
+    private Object[] arr;
+
+    public RleReader(Grid grid, String input) {
+        this.grid = grid;
+        this.input = input;
+        arr = new Object[3];
+    }
+
+    public void readFile() throws IOException {
         StringBuilder rle = new StringBuilder();
         String regex = "x = (\\d+), y = (\\d+), rule = (.+)";
         Pattern pattern = Pattern.compile(regex);
@@ -34,17 +43,21 @@ public class RleReader {
                 if (matcher.find()) {
                     int x = Integer.parseInt(matcher.group(1));
                     int y = Integer.parseInt(matcher.group(2));
-                    retVal[0] = x;
-                    retVal[1] = y;
+                    arr[0] = x;
+                    arr[1] = y;
                 }
             }
         }
-        retVal[2] = rle;
-                    reader.close();
+        arr[2] = rle;
+        reader.close();
 
-        int rleWidth = (int) retVal[0];
-        int rleHeight = (int) retVal[1];
-        String rleString = retVal[2].toString();
+    }
+
+    public void fillGrid() {
+
+        int rleWidth = (int) arr[0];
+        int rleHeight = (int) arr[1];
+        String rleString = arr[2].toString();
 
         int initialRow = 0;
         if (grid.getWidth() != rleWidth) {
@@ -77,9 +90,6 @@ public class RleReader {
                         for (int j = 0; j < count; j++) {
                             if (row < grid.getHeight() && col < grid.getWidth()) {
                                 grid.put(col, row);
-                                System.out.println("row: " + row);
-                                System.out.println("col: " + col);
-                                System.out.println(grid.isAlive(row, col));
                                 col++;
                             }
                         }
