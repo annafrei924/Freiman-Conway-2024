@@ -60,10 +60,8 @@ public class GridFrame extends JFrame {
 
 
 
-        JTextField rleField = new JTextField(50);
         JButton pasteButton = new JButton("Paste");
         JPanel rlePanel = new JPanel();
-        rlePanel.add(rleField);
         rlePanel.add(pasteButton);
         add(rlePanel, BorderLayout.NORTH);
 
@@ -73,30 +71,11 @@ public class GridFrame extends JFrame {
                 RleReader reader = new RleReader(grid, paste.toString());
                 reader.readFile();
                 reader.fillGrid();
-                if (paste.toString().endsWith(".rle")) {
-                    rleField.setText(paste.toString());
-                }
                 repaint();
             } catch (UnsupportedFlavorException | IOException ex) {
                 throw new RuntimeException(ex);
             }
         });
-        rleField.addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyPressed(KeyEvent e) {
-                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-                    RleReader rleReader = new RleReader(grid, rleField.getText());
-                    try {
-                        rleReader.readFile();
-                        rleReader.fillGrid();
-                    } catch (IOException ex) {
-                        throw new RuntimeException(ex);
-                    }
-                    repaint();
-                }
-            }
-        });
-
 
     }
 

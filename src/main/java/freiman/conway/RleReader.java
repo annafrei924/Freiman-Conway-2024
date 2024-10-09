@@ -11,12 +11,12 @@ public class RleReader {
     private Grid grid;
     private String input;
 
-    private Object[] arr;
+    private String[] arr;
 
     public RleReader(Grid grid, String input) {
         this.grid = grid;
         this.input = input;
-        arr = new Object[3];
+        arr = new String[3];
     }
 
     public void readFile() throws IOException {
@@ -41,23 +41,21 @@ public class RleReader {
             } else if (line.startsWith("x")) {
                 Matcher matcher = pattern.matcher(line);
                 if (matcher.find()) {
-                    int x = Integer.parseInt(matcher.group(1));
-                    int y = Integer.parseInt(matcher.group(2));
-                    arr[0] = x;
-                    arr[1] = y;
+                    arr[0] = matcher.group(1);
+                    arr[1] = matcher.group(2);
                 }
             }
         }
-        arr[2] = rle;
+        arr[2] = rle.toString();
         reader.close();
 
     }
 
     public void fillGrid() {
 
-        int rleWidth = (int) arr[0];
-        int rleHeight = (int) arr[1];
-        String rleString = arr[2].toString();
+        int rleWidth = Integer.parseInt(arr[0]);
+        int rleHeight = Integer.parseInt(arr[1]);
+        String rleString = arr[2];
 
         int initialRow = 0;
         if (grid.getWidth() != rleWidth) {
@@ -77,7 +75,6 @@ public class RleReader {
             char c = rleString.charAt(i);
             if (Character.isDigit(c)) {
                 count = Integer.parseInt(String.valueOf(c));
-                ;
             } else {
                 if (count == 0) {
                     count = 1;
@@ -110,7 +107,7 @@ public class RleReader {
         }
     }
 
-    private static boolean isValidUrl(String input) {
+    private boolean isValidUrl(String input) {
         try {
             new URL(input).toURI();
             return true;
@@ -119,7 +116,7 @@ public class RleReader {
         }
     }
 
-    private static boolean isFilePath(String input) {
+    private boolean isFilePath(String input) {
         File file = new File(input);
         return file.exists() && file.isFile();
     }
