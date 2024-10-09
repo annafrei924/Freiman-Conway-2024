@@ -2,15 +2,18 @@ package freiman.conway;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.datatransfer.DataFlavor;
+import java.awt.datatransfer.UnsupportedFlavorException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.io.IOException;
 
 public class GridFrame extends JFrame {
-    private static final int gridSpacing = 15;
+    private static final int gridSpacing = 7;
 
-    private final Grid grid = new Grid(50, 50);
+    private final Grid grid = new Grid(100, 100);
     private Timer timer;
 
     public GridFrame() {
@@ -56,19 +59,23 @@ public class GridFrame extends JFrame {
         add(buttonPanel, BorderLayout.SOUTH);
 
 
-        JTextField rleField = new JTextField();
-        add(rleField, BorderLayout.NORTH);
-        rleField.addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyPressed(KeyEvent e) {
-                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-                    String rleInput = rleField.getText();
-                    grid.readRle(rleInput);
-                    repaint();
-                }
+
+        JButton pasteButton = new JButton("Paste");
+        JPanel rlePanel = new JPanel();
+        rlePanel.add(pasteButton);
+        add(rlePanel, BorderLayout.NORTH);
+
+        pasteButton.addActionListener(e -> {
+            try {
+                Object paste = Toolkit.getDefaultToolkit().getSystemClipboard().getData(DataFlavor.stringFlavor);
+                RleReader reader = new RleReader(grid, paste.toString());
+                reader.readFile();
+                reader.fillGrid();
+                repaint();
+            } catch (UnsupportedFlavorException | IOException ex) {
+                throw new RuntimeException(ex);
             }
         });
-
 
     }
 

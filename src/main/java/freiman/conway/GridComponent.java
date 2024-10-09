@@ -7,7 +7,7 @@ import java.awt.event.MouseListener;
 
 public class GridComponent extends JComponent {
     private final Grid grid;
-    private final int gridSpacing = 15;
+    private final int gridSpacing = 7;
 
 
     public GridComponent(Grid grid) {
