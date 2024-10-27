@@ -7,19 +7,19 @@ import java.net.URL;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class RleReader {
+public class RleParser {
     private Grid grid;
     private String input;
 
     private String[] arr;
 
-    public RleReader(Grid grid, String input) {
+    public RleParser(Grid grid, String input) {
         this.grid = grid;
         this.input = input;
         arr = new String[3];
     }
 
-    public void readFile() throws IOException {
+    public void loadFromRle(String data) throws IOException {
         StringBuilder rle = new StringBuilder();
         String regex = "x = (\\d+), y = (\\d+), rule = (.+)";
         Pattern pattern = Pattern.compile(regex);
@@ -48,7 +48,6 @@ public class RleReader {
         }
         arr[2] = rle.toString();
         reader.close();
-
     }
 
     public void fillGrid() {

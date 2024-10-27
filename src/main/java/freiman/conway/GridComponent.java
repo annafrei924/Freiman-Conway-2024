@@ -7,7 +7,7 @@ import java.awt.event.MouseListener;
 
 public class GridComponent extends JComponent {
     private final Grid grid;
-    private final int gridSpacing = 7;
+    private final int cellSize = 7;
 
 
     public GridComponent(Grid grid) {
@@ -15,8 +15,8 @@ public class GridComponent extends JComponent {
         addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                int posX = e.getX() / gridSpacing;
-                int posY = e.getY() / gridSpacing;
+                int posX = e.getX() / cellSize;
+                int posY = e.getY() / cellSize;
                 if (!grid.isAlive(posX, posY)) {
                     grid.put(posX, posY);
                 } else {
@@ -53,16 +53,20 @@ public class GridComponent extends JComponent {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         g.setColor(Color.LIGHT_GRAY);
-        g.fillRect(0, 0, grid.getWidth() * gridSpacing, grid.getHeight() * gridSpacing);
+        g.fillRect(0, 0, grid.getWidth() * cellSize, grid.getHeight() * cellSize);
         //draw the boxes
         for (int y = 0; y < grid.getHeight(); y++) {
             for (int x = 0; x < grid.getWidth(); x++) {
                 if (grid.isAlive(x, y)) {
                     g.setColor(Color.GREEN);
-                    g.fillRect(x * gridSpacing, y * gridSpacing, gridSpacing, gridSpacing);
+                    g.fillRect(x * cellSize, y * cellSize, cellSize, cellSize);
                 }
             }
         }
-
     }
+
+    public int getCellSize() {
+        return cellSize;
+    }
+
 }

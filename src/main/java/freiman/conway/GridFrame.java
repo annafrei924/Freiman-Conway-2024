@@ -68,8 +68,8 @@ public class GridFrame extends JFrame {
         pasteButton.addActionListener(e -> {
             try {
                 Object paste = Toolkit.getDefaultToolkit().getSystemClipboard().getData(DataFlavor.stringFlavor);
-                RleReader reader = new RleReader(grid, paste.toString());
-                reader.readFile();
+                RleParser reader = new RleParser(grid, paste.toString());
+                reader.loadFromRle();
                 reader.fillGrid();
                 repaint();
             } catch (UnsupportedFlavorException | IOException ex) {
