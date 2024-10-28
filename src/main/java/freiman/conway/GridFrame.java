@@ -11,6 +11,13 @@ import java.awt.event.KeyEvent;
 import java.io.IOException;
 
 public class GridFrame extends JFrame {
+    private final Timer timer;
+    private final JButton playAndPause;
+    private final JButton next;
+    private final JButton clear;
+    private final JButton reset;
+    private boolean isPlaying;
+
     private static final int gridSpacing = 7;
 
     private final Grid grid = new Grid(100, 100);
@@ -22,6 +29,24 @@ public class GridFrame extends JFrame {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
         GridComponent gridComponent = new GridComponent(grid);
+        RleParser parser = new RleParser(grid.getGrid());
+        GridController controller = new GridController(grid, gridComponent, parser);
+        
+        gridComponent.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                controller.toggleCell(e.getX(), e.getY());
+            }
+        });
+        
+        
+        gridComponent.addMouseMotionListener(new MouseMotionAdapter() {
+            @Override
+            public void mouseDragged(MouseEvent e) {
+                controller.toggleCell(e.getX(), e.getY());
+            }
+        });
+        
         add(gridComponent, BorderLayout.CENTER);
 
         JButton playButton = new JButton("Play");
