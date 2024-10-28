@@ -4,6 +4,7 @@ package freiman.conway;
 public class Grid {
 
     private int[][] field;
+    private int[][] start;
 
     public Grid(int width, int height) {
         field = new int[height][width];
@@ -71,6 +72,18 @@ public class Grid {
      */
     public void clear() {
         field = new int [getHeight()][getWidth()];
+    }
+    
+    public void setStart() {
+        start = field;
+    }
+    
+    public void reset() {
+        field = start;
+    }
+    
+    public int[][] getgrid() {
+        return field;
     }
     public String toString() {
         StringBuilder builder = new StringBuilder();
