@@ -13,7 +13,7 @@ public class GridComponent extends JComponent {
         this.grid = grid;
         this.cellSize = cellSize;
 
-        grid.clear();
+        grid.setStart();
     }
 
 @Override
