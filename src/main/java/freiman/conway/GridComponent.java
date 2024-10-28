@@ -7,54 +7,28 @@ import java.awt.event.MouseListener;
 
 public class GridComponent extends JComponent {
     private final Grid grid;
-    private final int cellSize = 7;
+    private final int cellSize;
 
-
-    public GridComponent(Grid grid) {
+    public GridComponent(Grid grid, int cellSize) {
         this.grid = grid;
-        addMouseListener(new MouseListener() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                int posX = e.getX() / cellSize;
-                int posY = e.getY() / cellSize;
-                if (!grid.isAlive(posX, posY)) {
-                    grid.put(posX, posY);
-                } else {
-                    grid.remove(posX, posY);
-                }
+        this.cellSize = cellSize;
 
-                repaint();
-
-            }
-
-            @Override
-            public void mousePressed(MouseEvent e) {
-
-            }
-
-            @Override
-            public void mouseReleased(MouseEvent e) {
-
-            }
-
-            @Override
-            public void mouseEntered(MouseEvent e) {
-
-            }
-
-            @Override
-            public void mouseExited(MouseEvent e) {
-
-            }
-        });
+        grid.setInitial();
     }
 
-    @Override
+@Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
+
         g.setColor(Color.LIGHT_GRAY);
-        g.fillRect(0, 0, grid.getWidth() * cellSize, grid.getHeight() * cellSize);
-        //draw the boxes
+
+        for (int i = 0; i <= getWidth() / cellSize; i++) {
+            g.drawLine(i * cellSize, 0, i * cellSize, getHeight());
+        }
+        for (int i = 0; i <= getHeight() / cellSize; i++) {
+            g.drawLine(0, i * cellSize, getWidth(), i * cellSize);
+        }
+
         for (int y = 0; y < grid.getHeight(); y++) {
             for (int x = 0; x < grid.getWidth(); x++) {
                 if (grid.isAlive(x, y)) {
@@ -65,8 +39,8 @@ public class GridComponent extends JComponent {
         }
     }
 
-    public int getCellSize() {
+    public int getCellSize()
+    {
         return cellSize;
     }
-
 }
