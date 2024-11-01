@@ -8,15 +8,12 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class RleParser {
+
     private Grid grid;
-    private String input;
+    String[] arr = new String[3];
 
-    private String[] arr;
-
-    public RleParser(Grid grid, String input) {
+    public RleParser(Grid grid) {
         this.grid = grid;
-        this.input = input;
-        arr = new String[3];
     }
 
     public void loadFromRle(String data) throws IOException {
@@ -25,14 +22,13 @@ public class RleParser {
         Pattern pattern = Pattern.compile(regex);
         BufferedReader reader = null;
 
-        if (isValidUrl(input)) {
-            URL url = new URL(input);
+        if (isValidUrl(data)) {
+            URL url = new URL(data);
             reader = new BufferedReader(new InputStreamReader(url.openStream()));
-        } else if (isFilePath(input)) {
-            reader = new BufferedReader(new FileReader(input));
+        } else if (isFilePath(data)) {
+            reader = new BufferedReader(new FileReader(data));
         } else {
-            reader = new BufferedReader(new StringReader(input.replace("\r\n", "\n")));
-            System.out.println(input);
+            reader = new BufferedReader(new StringReader(data.replace("\r\n", "\n")));
         }
         String line;
         while ((line = reader.readLine()) != null) {

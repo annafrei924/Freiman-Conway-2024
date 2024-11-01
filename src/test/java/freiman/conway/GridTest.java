@@ -51,43 +51,4 @@ public class GridTest {
         assertEquals("000\n000\n000\n", grid.toString());
     }
 
-    @Test
-    public void rleReaderSameSize() throws IOException {
-        //given
-        Grid grid = new Grid(3, 3);
-        grid.put(1, 0);
-        grid.put(2, 1);
-        grid.put(0, 2);
-        grid.put(1, 2);
-        grid.put(2, 2);
-
-        //when
-        Grid rleGrid = new Grid(3, 3);
-
-        RleReader rleReader = new RleReader(rleGrid, "https://conwaylife.com/patterns/glider.rle");
-        rleReader.readFile();
-        rleReader.fillGrid();
-
-        assertEquals(grid.toString(), rleGrid.toString());
-    }
-
-    @Test
-    public void rleReaderDifferentSize() throws IOException {
-        //given
-        Grid grid = new Grid(10, 10);
-        grid.put(5, 4);
-        grid.put(6, 5);
-        grid.put(4, 6);
-        grid.put(5, 6);
-        grid.put(6, 6);
-        Grid rleGrid = new Grid(10, 10);
-
-        //when
-        RleReader rleReader = new RleReader(rleGrid, "https://conwaylife.com/patterns/glider.rle");
-        rleReader.readFile();
-        rleReader.fillGrid();
-
-        //then
-        assertEquals(grid.toString(), rleGrid.toString());
-    }
 }

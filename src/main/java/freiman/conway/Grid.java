@@ -18,6 +18,7 @@ public class Grid {
         return field.length;
     }
 
+
     public boolean isAlive(int x, int y) {
         return field[y][x] == 1;
     }
@@ -77,14 +78,7 @@ public class Grid {
     public void setStart() {
         start = field;
     }
-    
-    public void reset() {
-        field = start;
-    }
-    
-    public int[][] getgrid() {
-        return field;
-    }
+
     public String toString() {
         StringBuilder builder = new StringBuilder();
         for (int y = 0; y < field.length; y++) {

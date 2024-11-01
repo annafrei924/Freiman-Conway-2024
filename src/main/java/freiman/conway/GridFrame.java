@@ -1,52 +1,41 @@
+
 package freiman.conway;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.DataFlavor;
+import java.awt.datatransfer.Transferable;
 import java.awt.datatransfer.UnsupportedFlavorException;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
+import java.awt.event.*;
 import java.io.IOException;
 
 public class GridFrame extends JFrame {
-    private final Timer timer;
-    private final JButton playAndPause;
-    private final JButton next;
-    private final JButton clear;
-    private final JButton reset;
-    private boolean isPlaying;
+    private  Timer timer;
 
-    private static final int gridSpacing = 7;
-
-    private final Grid grid = new Grid(100, 100);
-    private Timer timer;
-
-    public GridFrame() {
-        setSize(grid.getWidth() * gridSpacing, grid.getHeight() * gridSpacing);
+    public GridFrame(Grid grid) {
+        setSize(800, 800);
         setTitle("Game of Life");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
+        int cellsize = Math.min(getHeight() / grid.getHeight(), getWidth() / grid.getWidth());
 
-        GridComponent gridComponent = new GridComponent(grid);
-        RleParser parser = new RleParser(grid.getGrid());
+        GridComponent gridComponent = new GridComponent(grid, cellsize);
+        RleParser parser = new RleParser(grid);
         GridController controller = new GridController(grid, gridComponent, parser);
-        
         gridComponent.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 controller.toggleCell(e.getX(), e.getY());
             }
         });
-        
-        
+
         gridComponent.addMouseMotionListener(new MouseMotionAdapter() {
             @Override
             public void mouseDragged(MouseEvent e) {
                 controller.toggleCell(e.getX(), e.getY());
             }
         });
-        
+
         add(gridComponent, BorderLayout.CENTER);
 
         JButton playButton = new JButton("Play");
@@ -83,8 +72,6 @@ public class GridFrame extends JFrame {
         buttonPanel.add(clearButton);
         add(buttonPanel, BorderLayout.SOUTH);
 
-
-
         JButton pasteButton = new JButton("Paste");
         JPanel rlePanel = new JPanel();
         rlePanel.add(pasteButton);
@@ -93,14 +80,14 @@ public class GridFrame extends JFrame {
         pasteButton.addActionListener(e -> {
             try {
                 Object paste = Toolkit.getDefaultToolkit().getSystemClipboard().getData(DataFlavor.stringFlavor);
-                RleParser reader = new RleParser(grid, paste.toString());
-                reader.loadFromRle();
-                reader.fillGrid();
+                parser.loadFromRle(paste.toString());
+                parser.fillGrid();
                 repaint();
             } catch (UnsupportedFlavorException | IOException ex) {
                 throw new RuntimeException(ex);
             }
         });
+
 
     }
 

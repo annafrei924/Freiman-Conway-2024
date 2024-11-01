@@ -1,5 +1,7 @@
 package freiman.conway;
 
+import java.io.IOException;
+
 public class GridController
 {
     private final Grid model;
@@ -26,8 +28,7 @@ public class GridController
         view.repaint();
     }
 
-    public void paste(String data)
-    {
+    public void paste(String data) throws IOException {
         parser.loadFromRle(data);
         view.repaint();
     }
