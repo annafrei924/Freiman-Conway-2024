@@ -19,15 +19,6 @@ public class GridComponent extends JComponent {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
 
-        g.setColor(Color.LIGHT_GRAY);
-
-        for (int i = 0; i <= getWidth() / cellSize; i++) {
-            g.drawLine(i * cellSize, 0, i * cellSize, getHeight());
-        }
-        for (int i = 0; i <= getHeight() / cellSize; i++) {
-            g.drawLine(0, i * cellSize, getWidth(), i * cellSize);
-        }
-
         for (int y = 0; y < grid.getHeight(); y++) {
             for (int x = 0; x < grid.getWidth(); x++) {
                 if (grid.isAlive(x, y)) {

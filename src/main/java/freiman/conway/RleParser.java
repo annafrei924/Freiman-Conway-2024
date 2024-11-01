@@ -104,9 +104,9 @@ public class RleParser {
 
     private boolean isValidUrl(String input) {
         try {
-            new URL(input).toURI();
+            new URL(input);
             return true;
-        } catch (URISyntaxException | IllegalArgumentException | MalformedURLException e) {
+        } catch (IllegalArgumentException | MalformedURLException e) {
             return false;
         }
     }

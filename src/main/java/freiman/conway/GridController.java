@@ -33,14 +33,4 @@ public class GridController
         view.repaint();
     }
 
-    public void startTimer()
-    {
-
-    }
-
-    public void stopTimer()
-    {
-
-    }
-
 }
