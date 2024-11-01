@@ -1,14 +1,10 @@
 package freiman.conway;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.net.URL;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class Grid {
 
     private int[][] field;
+    private int[][] start;
 
     public Grid(int width, int height) {
         field = new int[height][width];
@@ -21,6 +17,7 @@ public class Grid {
     public int getHeight() {
         return field.length;
     }
+
 
     public boolean isAlive(int x, int y) {
         return field[y][x] == 1;
@@ -77,92 +74,10 @@ public class Grid {
     public void clear() {
         field = new int [getHeight()][getWidth()];
     }
-    /**
-     * @param width - the width of the new field
-     * @param height - the height of the new field
-     * resizes and clears the grid
-     */
-
-    public void clear(int width, int height) {
-        field = new int[height][width];
+    
+    public void setStart() {
+        start = field;
     }
-
-    /**
-     * @param filePath
-     * reads from an RLE file
-     */
-    public void readRle(String filePath) {
-        StringBuilder rle = new StringBuilder();
-        String line;
-        String regex = "x = (\\d+), y = (\\d+), rule = (.+)";
-        Pattern pattern = Pattern.compile(regex);
-
-        try {
-            URL url = new URL(filePath);
-            BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream()));
-            while ((line = reader.readLine()) != null) {
-                if (!line.startsWith("#") && !line.startsWith("x")) {
-                    rle.append(line);
-                } else if (line.startsWith("x")) {
-                    Matcher matcher = pattern.matcher(line);
-                    if (matcher.find()) {
-                        int x = Integer.parseInt(matcher.group(1));
-                        int y = Integer.parseInt(matcher.group(2));
-                        clear(x, y);
-                    }
-                }
-            }
-            reader.close();
-            rleToGrid(rle.toString());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    /**
-     * @param rle - string with meaningful content in a rle file
-     * Goes through the rle and fills the grid accordingly
-     */
-    public void rleToGrid(String rle) {
-        int row = 0;
-        int col = 0;
-        int count = 0;
-
-        for (int i = 0; i < rle.length(); i++) {
-            char c = rle.charAt(i);
-            if (Character.isDigit(c)) {
-                count = Integer.parseInt(String.valueOf(c));;
-            } else {
-                if (count == 0) {
-                    count = 1;
-                }
-                switch (c) {
-                    case 'b':
-                        col += count;
-                        break;
-                    case 'o':
-                        for (int j = 0; j < count; j++) {
-                            if (row < getHeight() && col < getWidth()) {
-                                field[row][col] = 1;
-                                col++;
-                            }
-                        }
-                        break;
-                    case '$':
-                        row += count;
-                        col = 0;
-                        break;
-                    case '!':
-                        return;
-                    default:
-                        System.out.println("Invalid character: " + c);
-                        break;
-                }
-                count = 0;
-            }
-        }
-    }
-
 
     public String toString() {
         StringBuilder builder = new StringBuilder();

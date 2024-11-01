@@ -1,24 +1,39 @@
+
 package freiman.conway;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
+import java.awt.datatransfer.DataFlavor;
+import java.awt.datatransfer.UnsupportedFlavorException;
+import java.awt.event.*;
+import java.io.IOException;
 
 public class GridFrame extends JFrame {
-    private static final int gridSpacing = 15;
+    private  Timer timer;
 
-    private final Grid grid = new Grid(50, 50);
-    private Timer timer;
-
-    public GridFrame() {
-        setSize(grid.getWidth() * gridSpacing, grid.getHeight() * gridSpacing);
+    public GridFrame(Grid grid) {
+        setSize(800, 800);
         setTitle("Game of Life");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
+        int cellsize = Math.min(getHeight() / grid.getHeight(), getWidth() / grid.getWidth());
 
-        GridComponent gridComponent = new GridComponent(grid);
+        GridComponent gridComponent = new GridComponent(grid, cellsize);
+        RleParser parser = new RleParser(grid);
+        GridController controller = new GridController(grid, gridComponent, parser);
+        gridComponent.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                controller.toggleCell(e.getX(), e.getY());
+            }
+        });
+
+        gridComponent.addMouseMotionListener(new MouseMotionAdapter() {
+            @Override
+            public void mouseDragged(MouseEvent e) {
+                controller.toggleCell(e.getX(), e.getY());
+            }
+        });
+
         add(gridComponent, BorderLayout.CENTER);
 
         JButton playButton = new JButton("Play");
@@ -55,17 +70,19 @@ public class GridFrame extends JFrame {
         buttonPanel.add(clearButton);
         add(buttonPanel, BorderLayout.SOUTH);
 
+        JButton pasteButton = new JButton("Paste");
+        JPanel rlePanel = new JPanel();
+        rlePanel.add(pasteButton);
+        add(rlePanel, BorderLayout.NORTH);
 
-        JTextField rleField = new JTextField();
-        add(rleField, BorderLayout.NORTH);
-        rleField.addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyPressed(KeyEvent e) {
-                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-                    String rleInput = rleField.getText();
-                    grid.readRle(rleInput);
-                    repaint();
-                }
+        pasteButton.addActionListener(e -> {
+            try {
+                Object paste = Toolkit.getDefaultToolkit().getSystemClipboard().getData(DataFlavor.stringFlavor);
+                parser.loadFromRle(paste.toString());
+                parser.fillGrid();
+                repaint();
+            } catch (UnsupportedFlavorException | IOException ex) {
+                throw new RuntimeException(ex);
             }
         });
 
